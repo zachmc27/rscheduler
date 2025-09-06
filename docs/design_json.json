@@ -1,0 +1,184 @@
+{
+  "design_system": {
+    "name": "RScheduler Restaurant Theme",
+    "description": "Professional restaurant scheduling application with dual light/dark mode support",
+    "base_font_size": "16px",
+    "border_radius": "0.625rem"
+  },
+  "color_palette": {
+    "light_mode": {
+      "background": "#f4f6f6",
+      "foreground": "#1e2761",
+      "card": "#ffffff",
+      "card_foreground": "#1e2761",
+      "popover": "#ffffff",
+      "popover_foreground": "#1e2761",
+      "primary": "#1e2761",
+      "primary_foreground": "#ffffff",
+      "secondary": "#89abe3",
+      "secondary_foreground": "#1e2761",
+      "muted": "#d5dbdb",
+      "muted_foreground": "#00246b",
+      "accent": "#fee715",
+      "accent_foreground": "#1e2761",
+      "destructive": "#d4183d",
+      "destructive_foreground": "#ffffff",
+      "border": "rgba(30, 39, 97, 0.1)",
+      "input": "transparent",
+      "input_background": "#ffffff",
+      "switch_background": "#d5dbdb",
+      "ring": "#89abe3"
+    },
+    "dark_mode": {
+      "background": "#1a1a1a",
+      "foreground": "#e0e0e0",
+      "card": "#2a2a2a",
+      "card_foreground": "#e0e0e0",
+      "popover": "#2a2a2a",
+      "popover_foreground": "#e0e0e0",
+      "primary": "#5c87b2",
+      "primary_foreground": "#1a1a1a",
+      "secondary": "#40b5ad",
+      "secondary_foreground": "#1a1a1a",
+      "muted": "#3a3a3a",
+      "muted_foreground": "#b0b0b0",
+      "accent": "#ffd700",
+      "accent_foreground": "#1a1a1a",
+      "destructive": "#d4183d",
+      "destructive_foreground": "#e0e0e0",
+      "border": "rgba(224, 224, 224, 0.1)",
+      "input": "#3a3a3a",
+      "input_background": "#3a3a3a",
+      "switch_background": "#4a4a4a",
+      "ring": "#5c87b2"
+    },
+    "chart_colors": {
+      "light_mode": ["#1e2761", "#89abe3", "#fee715", "#a7beae", "#e7d7a4"],
+      "dark_mode": ["#5c87b2", "#40b5ad", "#ffd700", "#8a8a8a", "#a0a0a0"]
+    }
+  },
+  "sidebar_styling": {
+    "light_mode": {
+      "sidebar": "#f4f6f6",
+      "sidebar_foreground": "#1e2761",
+      "sidebar_primary": "#1e2761",
+      "sidebar_primary_foreground": "#ffffff",
+      "sidebar_accent": "#ffffff",
+      "sidebar_accent_foreground": "#1e2761",
+      "sidebar_border": "rgba(30, 39, 97, 0.1)",
+      "sidebar_ring": "#89abe3"
+    },
+    "dark_mode": {
+      "sidebar": "#2a2a2a",
+      "sidebar_foreground": "#e0e0e0",
+      "sidebar_primary": "#5c87b2",
+      "sidebar_primary_foreground": "#e0e0e0",
+      "sidebar_accent": "#3a3a3a",
+      "sidebar_accent_foreground": "#e0e0e0",
+      "sidebar_border": "rgba(224, 224, 224, 0.1)",
+      "sidebar_ring": "#5c87b2"
+    }
+  },
+  "typography": {
+    "font_weights": {
+      "normal": 400,
+      "medium": 500
+    },
+    "headings": {
+      "h1": {
+        "size": "text-2xl",
+        "weight": "font-medium",
+        "line_height": "1.5"
+      },
+      "h2": {
+        "size": "text-xl",
+        "weight": "font-medium",
+        "line_height": "1.5"
+      },
+      "h3": {
+        "size": "text-lg",
+        "weight": "font-medium",
+        "line_height": "1.5"
+      },
+      "h4": {
+        "size": "text-base",
+        "weight": "font-medium",
+        "line_height": "1.5"
+      }
+    },
+    "body_text": {
+      "size": "text-base",
+      "weight": "font-normal",
+      "line_height": "1.5"
+    },
+    "labels": {
+      "size": "text-base",
+      "weight": "font-medium",
+      "line_height": "1.5"
+    },
+    "buttons": {
+      "size": "text-base",
+      "weight": "font-medium",
+      "line_height": "1.5"
+    },
+    "inputs": {
+      "size": "text-base",
+      "weight": "font-normal",
+      "line_height": "1.5"
+    }
+  },
+  "border_radius": {
+    "sm": "calc(0.625rem - 4px)",
+    "md": "calc(0.625rem - 2px)",
+    "lg": "0.625rem",
+    "xl": "calc(0.625rem + 4px)"
+  },
+  "styling_instructions": {
+    "theme_implementation": "Use CSS custom properties with :root and .dark selectors for theme switching",
+    "component_styling": "Apply consistent border radius (0.625rem) to all cards, buttons, and input elements",
+    "color_usage": {
+      "primary": "Use for main actions, navigation, and brand elements",
+      "secondary": "Use for secondary actions and supporting UI elements",
+      "accent": "Use sparingly for highlights, notifications, and call-to-action elements",
+      "muted": "Use for disabled states, placeholder text, and subtle backgrounds"
+    },
+    "accessibility": "Ensure sufficient contrast ratios between foreground and background colors",
+    "consistency": "Maintain consistent spacing, typography, and color usage throughout the application"
+  },
+  "component_guidelines": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground with hover states",
+      "secondary": "bg-secondary text-secondary-foreground with hover states",
+      "accent": "bg-accent text-accent-foreground for important actions"
+    },
+    "cards": {
+      "styling": "bg-card text-card-foreground with border-border",
+      "radius": "rounded-lg",
+      "shadow": "Apply subtle shadows for depth"
+    },
+    "inputs": {
+      "styling": "bg-input-background text-foreground with border-border",
+      "focus": "ring-ring focus states",
+      "placeholder": "text-muted-foreground"
+    },
+    "navigation": {
+      "active": "bg-primary text-primary-foreground",
+      "inactive": "text-foreground hover:bg-muted"
+    },
+    "schedule_table": {
+      "cells": "border-border with alternating bg-card/bg-muted for rows",
+      "headers": "bg-primary text-primary-foreground",
+      "employee_names": "bg-secondary text-secondary-foreground"
+    }
+  },
+  "dark_mode_implementation": {
+    "toggle": "Include a theme toggle in settings that applies/removes 'dark' class to html element",
+    "persistence": "Save theme preference in localStorage",
+    "system_preference": "Respect user's system theme preference by default"
+  },
+  "responsive_design": {
+    "breakpoints": "Use Tailwind's default breakpoints (sm, md, lg, xl, 2xl)",
+    "mobile_first": "Design mobile-first, then enhance for larger screens",
+    "touch_targets": "Ensure minimum 44px touch targets for mobile"
+  }
+}

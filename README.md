@@ -1,36 +1,138 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RScheduler - Restaurant Schedule Maker
+
+A web-based restaurant scheduling tool that automatically generates employee schedules based on restaurant needs, employee availability, and approved requests.
+
+## Features
+
+- **Dashboard**: 7shifts-inspired schedule table with week navigation
+- **Restaurant Configuration**: Operating hours, roles, and staffing requirements
+- **Team Management**: Employee data with availability and request management
+- **Auto-Schedule Generation**: Rule-based algorithm considering all constraints
+- **Export Functionality**: Google Sheets integration with email delivery
+- **Theme Support**: Light/dark mode toggle
+- **Responsive Design**: Mobile-friendly interface
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 with React 18
+- **Backend**: Supabase (PostgreSQL + Auth)
+- **Styling**: Tailwind CSS with custom design system
+- **Forms**: React Hook Form with Zod validation
+- **UI Components**: Radix UI primitives
+- **Icons**: Lucide React
+- **TypeScript**: Full type safety
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+- Supabase account
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd restaurant_scheduler
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp env.template .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Configure your Supabase project:
+   - Create a new Supabase project
+   - Copy your project URL and anon key to `.env.local`
+   - Set up the database schema (see Database Setup below)
 
-## Learn More
+5. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Database Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application requires the following Supabase tables:
 
-## Deploy on Vercel
+- `users` - User accounts
+- `restaurants` - Restaurant configurations
+- `employees` - Employee data and availability
+- `time_off_requests` - PTO requests
+- `schedules` - Generated schedules
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See `src/types/supabase.ts` for the complete schema definition.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/                 # Next.js app router pages
+├── components/         # React components
+│   ├── ui/            # Reusable UI components
+│   ├── auth/          # Authentication components
+│   ├── dashboard/     # Dashboard-specific components
+│   ├── team/          # Team management components
+│   └── settings/      # Settings components
+├── lib/               # Utility libraries
+│   ├── supabase/     # Supabase client configuration
+│   ├── utils/        # Helper functions
+│   └── validations/  # Zod schemas
+├── types/            # TypeScript type definitions
+├── hooks/            # Custom React hooks
+└── contexts/         # React contexts
+```
+
+## Development
+
+### Code Formatting
+
+The project uses Prettier for code formatting:
+
+```bash
+npm run format
+```
+
+### Type Checking
+
+```bash
+npm run type-check
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+## Design System
+
+The application uses a custom design system with:
+
+- **Light Mode**: Deep blue primary (#1E2761), light blue secondary (#89ABE3)
+- **Dark Mode**: Lighter blue primary (#5C87B2), teal secondary (#40B5AD)
+- **Typography**: Inter font family, 16px base size
+- **Border Radius**: 0.625rem (10px) for consistent rounded corners
+
+See `docs/design_json.json` for complete design specifications.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
