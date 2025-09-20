@@ -17,6 +17,12 @@ interface ConfigurationPanelProps {
 export function ConfigurationPanel({ isOpen, onClose }: ConfigurationPanelProps) {
   const [scheduleStartDay, setScheduleStartDay] = useState("Monday");
   const [scheduleEndDay, setScheduleEndDay] = useState("Sunday");
+  const [staffingRequirements, setStaffingRequirements] = useState([
+    { day: "Monday", role: "Server", open: 2, mid: 3, closing: 2 },
+    { day: "Monday", role: "Cook", open: 1, mid: 2, closing: 1 },
+    { day: "Tuesday", role: "Server", open: 2, mid: 3, closing: 2 },
+    { day: "Tuesday", role: "Cook", open: 1, mid: 2, closing: 1 },
+  ]);
   
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   
@@ -53,13 +59,6 @@ export function ConfigurationPanel({ isOpen, onClose }: ConfigurationPanelProps)
     Sunday: { open: "11:00", close: "21:00" },
   });
 
-  const staffingRequirements = [
-    { day: "Monday", role: "Server", open: 2, mid: 3, closing: 2 },
-    { day: "Monday", role: "Cook", open: 1, mid: 2, closing: 1 },
-    { day: "Tuesday", role: "Server", open: 2, mid: 3, closing: 2 },
-    { day: "Tuesday", role: "Cook", open: 1, mid: 2, closing: 1 },
-  ];
-
   const pendingRequests = [
     { id: 1, employee: "Sarah Johnson", date: "Nov 22", reason: "Doctor appointment", status: "pending" },
     { id: 2, employee: "Mike Chen", date: "Nov 23-24", reason: "Family visit", status: "pending" },
@@ -87,6 +86,20 @@ export function ConfigurationPanel({ isOpen, onClose }: ConfigurationPanelProps)
   const handleGenerateSchedule = () => {
     console.log("Generating schedule...");
     onClose();
+  };
+
+  const handleStaffingChange = (index: number, field: 'open' | 'mid' | 'closing', value: string) => {
+    const numValue = parseInt(value) || 0;
+    setStaffingRequirements(prev => 
+      prev.map((req, i) => 
+        i === index ? { ...req, [field]: numValue } : req
+      )
+    );
+  };
+
+  const handleAddStaffingRow = () => {
+    console.log("Adding new staffing row");
+    // Placeholder for adding new row functionality
   };
 
   return (
@@ -246,23 +259,44 @@ export function ConfigurationPanel({ isOpen, onClose }: ConfigurationPanelProps)
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Staffing Requirements</CardTitle>
+                  <CardTitle className="flex items-center justify-between">
+                    Staffing Requirements
+                    <Button size="sm" variant="outline" onClick={handleAddStaffingRow}>
+                      <Plus size={16} className="mr-1" />
+                      Add Row
+                    </Button>
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {staffingRequirements.map((req, index) => (
-                      <div key={index} className="grid grid-cols-5 gap-2 items-center text-sm">
-                        <span>{req.day}</span>
-                        <span>{req.role}</span>
-                        <div className="text-center">
-                          <div>Open: {req.open}</div>
-                        </div>
-                        <div className="text-center">
-                          <div>Mid: {req.mid}</div>
-                        </div>
-                        <div className="text-center">
-                          <div>Close: {req.closing}</div>
-                        </div>
+                      <div key={index} className="grid grid-cols-5 gap-4 items-center">
+                        <Label>{req.day}</Label>
+                        <Label>{req.role}</Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          max="99"
+                          value={req.open}
+                          onChange={(e) => handleStaffingChange(index, 'open', e.target.value)}
+                          className="text-center"
+                        />
+                        <Input
+                          type="number"
+                          min="0"
+                          max="99"
+                          value={req.mid}
+                          onChange={(e) => handleStaffingChange(index, 'mid', e.target.value)}
+                          className="text-center"
+                        />
+                        <Input
+                          type="number"
+                          min="0"
+                          max="99"
+                          value={req.closing}
+                          onChange={(e) => handleStaffingChange(index, 'closing', e.target.value)}
+                          className="text-center"
+                        />
                       </div>
                     ))}
                   </div>

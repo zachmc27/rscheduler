@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { ChevronLeft, ChevronRight, Settings, Download, PanelRightOpen } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pencil, Download, PanelRightOpen } from "lucide-react";
 import { ConfigurationPanel } from "./ConfigurationPanel";
 
 export function Dashboard() {
@@ -82,7 +82,7 @@ export function Dashboard() {
             <div className="flex items-center gap-4">
               <h2>Mario's Italian Restaurant</h2>
               <Button variant="ghost" size="sm">
-                <Settings size={16} />
+                <Pencil size={16} />
               </Button>
             </div>
             

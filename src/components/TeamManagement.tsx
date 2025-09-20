@@ -8,7 +8,8 @@ import { Label } from "./ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
-import { Plus, Phone, Mail, Trash2, Calendar, Clock } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Plus, Phone, Mail, Trash2, Calendar, User, Clock as ClockIcon } from "lucide-react";
 
 interface Employee {
   id: number;
@@ -26,6 +27,7 @@ export function TeamManagement() {
   const [showAddEmployee, setShowAddEmployee] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<Employee | null>(null);
   const [showAddRequest, setShowAddRequest] = useState<Employee | null>(null);
+  const [editingAvailability, setEditingAvailability] = useState(false);
   const [newEmployee, setNewEmployee] = useState({
     name: "",
     status: "",
@@ -39,7 +41,7 @@ export function TeamManagement() {
   });
 
   // Role color assignment system - randomly assigns colors when roles are "created"
-  const roleColors = {
+  const roleColors: Record<string, string> = {
     "Manager": "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
     "Server": "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
     "Bartender": "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
@@ -255,6 +257,35 @@ export function TeamManagement() {
     setShowAddRequest(null);
   };
 
+  const handleAvailabilityChange = (day: string, value: string) => {
+    if (!selectedEmployee) return;
+    
+    const updatedEmployee = {
+      ...selectedEmployee,
+      availability: {
+        ...selectedEmployee.availability,
+        [day]: value
+      }
+    };
+    setSelectedEmployee(updatedEmployee);
+  };
+
+  const handleEmployeeInfoChange = (field: 'status' | 'phone' | 'email', value: string) => {
+    if (!selectedEmployee) return;
+    
+    const updatedEmployee = {
+      ...selectedEmployee,
+      [field]: value
+    };
+    setSelectedEmployee(updatedEmployee);
+  };
+
+  const handleSaveEmployee = () => {
+    console.log("Saving employee changes:", selectedEmployee);
+    // TODO: Implement actual save functionality
+    // This would typically update the employees array or make an API call
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
@@ -309,11 +340,11 @@ export function TeamManagement() {
 
       {/* Employee Detail Modal */}
       <Dialog open={!!selectedEmployee} onOpenChange={() => setSelectedEmployee(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
+        <DialogContent className="max-w-2xl max-h-[85vh] !flex !flex-col !p-0" style={{ '--dialog-close-top': '0.5rem' } as React.CSSProperties}>
+          <DialogHeader className="relative flex-shrink-0 p-6 pb-4">
             <DialogTitle className="flex items-center justify-between">
               <span>{selectedEmployee?.name}</span>
-              <div className="flex gap-2">
+              <div className="flex gap-3" style={{ marginRight: '20px' }}>
                 <Button 
                   variant="outline" 
                   size="sm"
@@ -338,74 +369,146 @@ export function TeamManagement() {
             </DialogDescription>
           </DialogHeader>
 
-          {selectedEmployee && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>Role</Label>
-                  <div className="mt-1">
-                    <Badge className={getRoleColor(selectedEmployee.role)}>
-                      {selectedEmployee.role}
-                    </Badge>
-                  </div>
-                </div>
-                <div>
-                  <Label>Employment Status</Label>
-                  <div className="mt-1">
-                    <Badge className={getStatusColor(selectedEmployee.status)}>
-                      {selectedEmployee.status === "FT" ? "Full Time" : "Part Time"}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
+          <div className="flex-1 overflow-y-auto px-6 pb-6 min-h-0 max-h-[calc(85vh-120px)]">
+            {selectedEmployee && (
+              <Tabs defaultValue="basic" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="basic" className="flex items-center gap-2">
+                    <User size={16} />
+                    Basic Information
+                  </TabsTrigger>
+                  <TabsTrigger value="availability" className="flex items-center gap-2">
+                    <ClockIcon size={16} />
+                    Weekly Availability
+                  </TabsTrigger>
+                </TabsList>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>Phone</Label>
-                  <p className="mt-1">{selectedEmployee.phone}</p>
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <p className="mt-1">{selectedEmployee.email}</p>
-                </div>
-              </div>
-
-              <div>
-                <Label>Weekly Availability</Label>
-                <div className="mt-2 space-y-2">
-                  {Object.entries(selectedEmployee.availability).map(([day, hours]) => (
-                    <div key={day} className="flex justify-between p-2 bg-muted rounded">
-                      <span>{day}</span>
-                      <span className={hours === "Not Available" ? "text-muted-foreground" : ""}>
-                        {hours}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <Label>Submitted Requests</Label>
-                <div className="mt-2 space-y-2">
-                  {selectedEmployee.requests.length > 0 ? (
-                    selectedEmployee.requests.map((request, index) => (
-                      <div key={index} className="border rounded p-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium">{request.date}</span>
-                          <Badge className={getRequestStatusColor(request.status)}>
-                            {request.status}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{request.reason}</p>
+                <TabsContent value="basic" className="space-y-4 mt-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Role</Label>
+                      <div className="mt-1">
+                        <Badge className={getRoleColor(selectedEmployee.role)}>
+                          {selectedEmployee.role}
+                        </Badge>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground">No requests submitted</p>
-                  )}
+                    </div>
+                    <div>
+                      <Label>Employment Status</Label>
+                      <div className="mt-1">
+                        <Select 
+                          value={selectedEmployee.status} 
+                          onValueChange={(value: string) => handleEmployeeInfoChange('status', value)}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="FT">Full Time</SelectItem>
+                            <SelectItem value="PT">Part Time</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Phone</Label>
+                      <Input
+                        value={selectedEmployee.phone}
+                        onChange={(e) => handleEmployeeInfoChange('phone', e.target.value)}
+                        placeholder="(555) 123-4567"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label>Email</Label>
+                      <Input
+                        type="email"
+                        value={selectedEmployee.email}
+                        onChange={(e) => handleEmployeeInfoChange('email', e.target.value)}
+                        placeholder="employee@email.com"
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label>Submitted Requests</Label>
+                    <div className="mt-2 space-y-2">
+                      {selectedEmployee.requests.length > 0 ? (
+                        selectedEmployee.requests.map((request, index) => (
+                          <div key={index} className="border rounded p-3">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium">{request.date}</span>
+                              <Badge className={getRequestStatusColor(request.status)}>
+                                {request.status}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{request.reason}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-sm text-muted-foreground">No requests submitted</p>
+                      )}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="availability" className="space-y-4 mt-6">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="text-sm font-medium">Weekly Availability</Label>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setEditingAvailability(!editingAvailability)}
+                      >
+                        {editingAvailability ? 'Save' : 'Edit'}
+                      </Button>
+                    </div>
+                    <div className="border rounded-md overflow-hidden">
+                      <div className="bg-muted/50 px-3 py-1.5 border-b">
+                        <div className="grid grid-cols-2 gap-4 text-xs font-medium text-muted-foreground">
+                          <div>Day</div>
+                          <div className="text-right">Availability</div>
+                        </div>
+                      </div>
+                      <div className="divide-y">
+                        {Object.entries(selectedEmployee.availability).map(([day, hours]) => (
+                          <div key={day} className="px-3 py-2 hover:bg-muted/30 transition-colors">
+                            <div className="grid grid-cols-2 gap-4 items-center">
+                              <span className="font-medium text-xs">{day}</span>
+                            {editingAvailability ? (
+                              <Input
+                                value={hours}
+                                onChange={(e) => handleAvailabilityChange(day, e.target.value)}
+                                placeholder="e.g., 9:00 AM - 5:00 PM"
+                                className="text-right h-6 text-xs border-0 bg-transparent focus:bg-background focus:border focus:border-input"
+                              />
+                            ) : (
+                                <span className={`text-xs text-right ${hours === "Not Available" ? "text-muted-foreground" : ""}`}>
+                                  {hours}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                {/* Save Button */}
+                <div className="flex justify-end pt-3 border-t mt-6">
+                  <Button onClick={handleSaveEmployee} className="min-w-24">
+                    Save Changes
+                  </Button>
                 </div>
-              </div>
-            </div>
-          )}
+              </Tabs>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
 
@@ -432,7 +535,7 @@ export function TeamManagement() {
               </div>
               <div>
                 <Label htmlFor="role">Role</Label>
-                <Select value={newEmployee.role} onValueChange={(value) => handleNewEmployeeChange("role", value)}>
+                <Select value={newEmployee.role} onValueChange={(value: string) => handleNewEmployeeChange("role", value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>
@@ -450,7 +553,7 @@ export function TeamManagement() {
 
             <div>
               <Label htmlFor="status">Employment Status</Label>
-              <Select value={newEmployee.status} onValueChange={(value) => handleNewEmployeeChange("status", value)}>
+              <Select value={newEmployee.status} onValueChange={(value: string) => handleNewEmployeeChange("status", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
