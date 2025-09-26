@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Badge } from "../ui/badge";
 import { ChevronLeft, ChevronRight, Pencil, Download, PanelRightOpen } from "lucide-react";
-import { ConfigurationPanel } from "./ConfigurationPanel";
+import { ConfigurationPanel } from "../configuration/ConfigurationPanel";
 
 export function Dashboard() {
   const [currentWeek, setCurrentWeek] = useState("Nov 18 - Nov 24, 2024");

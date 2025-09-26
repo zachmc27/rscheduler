@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Navigation } from "./components/Navigation";
-import { Dashboard } from "./components/Dashboard";
-import { TeamManagement } from "./components/TeamManagement";
-import { Settings } from "./components/Settings";
+import { Navigation } from "./components/common/Navigation";
+import { Dashboard } from "./components/dashboard/Dashboard";
+import { TeamManagement } from "./components/team/TeamManagement";
+import { Settings } from "./components/settings/Settings";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("dashboard");

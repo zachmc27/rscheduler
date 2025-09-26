@@ -1,5 +1,5 @@
-import { Button } from "./ui/button";
-import { Switch } from "./ui/switch";
+import { Button } from "../ui/button";
+import { Switch } from "../ui/switch";
 import { Calendar, Users, Settings, Moon, Sun } from "lucide-react";
 
 interface NavigationProps {

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { EmployeeCard } from "./EmployeeCard";
 import { EmployeeDetailsModal } from "./EmployeeDetailsModal";
 import { AddEmployeeModal } from "./AddEmployeeModal";
 import { RequestManagementModal } from "./RequestManagementModal";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
-import { Employee, NewEmployee, NewRequest, TimeInput } from "../types/employee";
+import { Employee, NewEmployee, NewRequest, TimeInput } from "../../types/employee";
 import { 
   mockEmployees, 
   getStatusColor, 
   getRoleColor, 
   getRequestStatusColor, 
   isValidTimeFormat 
-} from "../utils/employeeUtils";
+} from "../../utils/employee-utils";
 
 export function TeamManagement() {
   // State management

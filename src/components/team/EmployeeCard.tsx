@@ -1,7 +1,7 @@
-import { Badge } from "./ui/badge";
-import { Card, CardContent } from "./ui/card";
+import { Badge } from "../ui/badge";
+import { Card, CardContent } from "../ui/card";
 import { Phone, Mail, Calendar } from "lucide-react";
-import { Employee } from "../types/employee";
+import { Employee } from "../../types/employee";
 
 interface EmployeeCardProps {
   employee: Employee;
