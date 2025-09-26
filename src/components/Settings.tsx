@@ -87,6 +87,13 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                     id="name"
                     value={userSettings.name}
                     onChange={(e) => handleUserSettingsChange("name", e.target.value)}
+                    style={{
+                      border: '1px solid #9ca3af',
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      backgroundColor: 'white',
+                      marginTop: '5px'
+                    }}
                   />
                 </div>
                 <div>
@@ -96,6 +103,13 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                     type="email"
                     value={userSettings.email}
                     onChange={(e) => handleUserSettingsChange("email", e.target.value)}
+                    style={{
+                      border: '1px solid #9ca3af',
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      backgroundColor: 'white',
+                      marginTop: '5px'
+                    }}
                   />
                 </div>
               </div>
@@ -111,6 +125,13 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                     placeholder="Leave blank to keep current password"
                     value={userSettings.password}
                     onChange={(e) => handleUserSettingsChange("password", e.target.value)}
+                    style={{
+                      border: '1px solid #9ca3af',
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      backgroundColor: 'white',
+                      marginTop: '5px'
+                    }}
                   />
                 </div>
                 <div>
@@ -121,6 +142,13 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                     placeholder="Confirm new password"
                     value={userSettings.confirmPassword}
                     onChange={(e) => handleUserSettingsChange("confirmPassword", e.target.value)}
+                    style={{
+                      border: '1px solid #9ca3af',
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      backgroundColor: 'white',
+                      marginTop: '5px'
+                    }}
                   />
                 </div>
               </div>
@@ -172,7 +200,7 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                 <Label htmlFor="communication-method">Preferred Communication Method</Label>
                 <Select 
                   value={teamSettings.communicationMethod} 
-                  onValueChange={(value) => handleTeamSettingsChange("communicationMethod", value)}
+                  onValueChange={(value: string) => handleTeamSettingsChange("communicationMethod", value)}
                 >
                   <SelectTrigger className="mt-1">
                     <SelectValue />
@@ -206,7 +234,7 @@ export function Settings({ isDarkMode, onToggleDarkMode }: SettingsProps) {
                 </div>
                 <Switch
                   checked={teamSettings.disableEmailEntry}
-                  onCheckedChange={(value) => handleTeamSettingsChange("disableEmailEntry", value)}
+                  onCheckedChange={(value: boolean) => handleTeamSettingsChange("disableEmailEntry", value)}
                 />
               </div>
 
